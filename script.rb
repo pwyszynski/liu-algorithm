@@ -44,7 +44,7 @@ def Liu(tasklist)
 		# przebiegam cala petle w celu sprawdzenia które zadania właśnie doszły do systemu
 		for j in (0...len) do
 			# jeżeli arrival = currentTime to spushuj to zadanie do tablicy arrived
-			if tasklist[j].arrival = i
+			if tasklist[j].arrival == i
 				arrived.push(tasklist[j])
 			end
 		end
