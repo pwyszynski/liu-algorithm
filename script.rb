@@ -24,53 +24,31 @@ def sum_time(tasklist)
 	return time
 end
 
-def markFinished(tasklist)
+def markAndDeleteFinished(tasklist)
 	len = tasklist.length
 	for i in (0...len) do
 		if (tasklist[i].progress==tasklist[i].time)
 			tasklist[i].finished=true
 		end
 	end
+	tasklist.delete_if { |task| task.finished==true }
 end
 
-
-def Liu(tasklist)
-	totaltime = sum_time(tasklist)
-	len = tasklist.length
-	arrived = Array.new
-	earliest_deadline_index = 0
-
-	# i = jednostka czasu, w ktorej jestesmy
-	for i in (0...totaltime) do
-		# przebiegam cala petle w celu sprawdzenia które zadania właśnie doszły do systemu
-		for j in (0...len) do
-			# jeżeli arrival = currentTime to spushuj to zadanie do tablicy arrived
-			if (tasklist[j].arrival == i)
-				arrived.push(tasklist[j])
+def earliestDeadline(tasklist)
+	earliestDeadlineIndex = 0
+	for i in (0...tasklist.length-1) do
+		if (tasklist[i].deadline < tasklist[i+1].deadline)
+			if tasklist[i].finished==false
+				earliestDeadlineIndex = i
 			end
 		end
-
-		#wyszukiwanie najwcześniejszego deadline'u wśród tych, które dotarły
-		for k in (0...arrived.length) do
-			if (arrived[k].deadline<arrived[earliest_deadline_index].deadline)
-				if (arrived[k].finished==false)
-					earliest_deadline_index = k
-				end
-			end
-		end
-
-		arrived[earliest_deadline_index].progress+=1
-		arrived[earliest_deadline_index].aet=i
-
-		arrived[earliest_deadline_index].print_task
-
-		markFinished(arrived)
 	end
+	return earliestDeadlineIndex
 end
-
 
 #MAIN
 tasks = Array.new
+arrived = Array.new
 # puts "Podaj liczbę zadań:"
 # n = gets.chomp.to_i
 
@@ -90,12 +68,36 @@ tasks = Array.new
 
 # 	tasks.push(z)
 # end
+#(:index, :time, :progress, :arrival, :deadline, :aet, :finished)
+tasks.push(Task.new(1, 1, 0, 0, 2, 0, false))
+tasks.push(Task.new(2, 2, 0, 0, 5, 0, false))
+tasks.push(Task.new(3, 2, 0, 2, 4, 0, false))
+tasks.push(Task.new(4, 2, 0, 3, 10, 0, false))
+tasks.push(Task.new(5, 2, 0, 6, 9, 0, false))
 
-tasks.push(Task.new(1, 2, 0, 0, 2, 0, false))
-tasks.push(Task.new(2, 2, 0, 0, 3, 0, false))
-tasks.push(Task.new(3, 3, 0, 1, 1, 0, false))
-tasks.push(Task.new(4, 1, 0, 2, 4, 0, false))
-tasks.push(Task.new(5, 2, 0, 3, 5, 0, false))
-tasks.push(Task.new(6, 2, 0, 3, 5, 0, false))
 
-Liu(tasks)
+#Liu(tasks)
+totaltime = sum_time(tasks)
+len = tasks.length
+earliest_deadline_index = 0
+
+# i = jednostka czasu, w ktorej jestesmy
+for i in (0...totaltime) do
+	# przebiegam cala petle w celu sprawdzenia które zadania właśnie doszły do systemu
+	for j in (0...len) do
+		# jeżeli arrival = currentTime to spushuj to zadanie do tablicy arrived
+		if (tasks[j].arrival == i)
+			arrived.push(tasks[j])
+		end
+	end
+
+	earliest_deadline_index = earliestDeadline(arrived)
+
+	arrived[earliest_deadline_index].progress+=1
+
+	arrived[earliest_deadline_index].print_task_and_progress
+
+	markAndDeleteFinished(arrived)
+end
+
+
