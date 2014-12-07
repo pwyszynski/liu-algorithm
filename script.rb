@@ -36,7 +36,7 @@ end
 
 def earliestDeadline(tasklist)
 	earliestDeadlineIndex = 0
-	for i in (0...tasklist.length-1) do
+	for i in (0...tasklist.length) do
 		if (tasklist[i].deadline <= tasklist[earliestDeadlineIndex].deadline)
 			if tasklist[i].finished==false
 				earliestDeadlineIndex = i
@@ -69,21 +69,20 @@ arrived = Array.new
 # 	tasks.push(z)
 # end
 #(:index, :time, :progress, :arrival, :deadline, :aet, :finished)
-tasks.push(Task.new(1, 2, 0, 0, 2, 0, false))
-tasks.push(Task.new(2, 2, 0, 0, 3, 0, false))
-tasks.push(Task.new(3, 3, 0, 1, 1, 0, false))
-tasks.push(Task.new(4, 1, 0, 2, 4, 0, false))
-tasks.push(Task.new(5, 2, 0, 3, 5, 0, false))
-tasks.push(Task.new(6, 2, 0, 3, 5, 0, false))
+# tasks.push(Task.new(1, 2, 0, 0, 2, 0, false))
+# tasks.push(Task.new(2, 2, 0, 0, 3, 0, false))
+# tasks.push(Task.new(3, 3, 0, 1, 1, 0, false))
+# tasks.push(Task.new(4, 1, 0, 2, 4, 0, false))
+# tasks.push(Task.new(5, 2, 0, 3, 5, 0, false))
+# tasks.push(Task.new(6, 2, 0, 3, 5, 0, false))
 
 #Another set of tasks
-# tasks.push(Task.new(1, 1, 0, 0, 2, 0, false))
-# tasks.push(Task.new(2, 2, 0, 0, 5, 0, false))
-# tasks.push(Task.new(3, 2, 0, 2, 4, 0, false))
-# tasks.push(Task.new(4, 2, 0, 3, 10, 0, false))
-# tasks.push(Task.new(5, 2, 0, 6, 9, 0, false))
+tasks.push(Task.new(1, 1, 0, 0, 2, 0, false))
+tasks.push(Task.new(2, 2, 0, 0, 5, 0, false))
+tasks.push(Task.new(3, 2, 0, 2, 4, 0, false))
+tasks.push(Task.new(4, 2, 0, 3, 10, 0, false))
+tasks.push(Task.new(5, 2, 0, 6, 9, 0, false))
 
-#Liu(tasks)
 totaltime = sum_time(tasks)
 len = tasks.length
 earliest_deadline_index = 0
