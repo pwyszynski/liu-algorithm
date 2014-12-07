@@ -1,5 +1,6 @@
 #!/bin/env ruby
 # encoding: utf-8
+#wmoimsercutylkoRuby
 
 class Task <
   Struct.new(:index, :time, :progress, :arrival, :deadline, :aet, :finished)
@@ -32,8 +33,17 @@ end
 def Liu(tasklist)
 	totaltime = sum_time(tasklist)
 	len = tasklist.length
+	arrived = Array.new
+
 	for i in (0...tim) do
+		for j in (0...len) do
+			if tasklist[j].arrival = i
+				arrived.push(tasklist[j])
+			end
+		end
+
 		
+
 	end
 
 
