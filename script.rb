@@ -38,23 +38,24 @@ def Liu(tasklist)
 	totaltime = sum_time(tasklist)
 	len = tasklist.length
 	arrived = Array.new
+	earliest_deadline_index = 0
 
 	# i = jednostka czasu, w ktorej jestesmy
 	for i in (0...totaltime) do
 		# przebiegam cala petle w celu sprawdzenia które zadania właśnie doszły do systemu
 		for j in (0...len) do
 			# jeżeli arrival = currentTime to spushuj to zadanie do tablicy arrived
-			if tasklist[j].arrival = i
+			if (tasklist[j].arrival == i)
 				arrived.push(tasklist[j])
 			end
 		end
 
-		earliest_deadline_index = 0
-
 		#wyszukiwanie najwcześniejszego deadline'u wśród tych, które dotarły
 		for k in (0...arrived.length) do
-			if (arrived[k].deadline<arrived[earliest_deadline_index].deadline && arrived[k].finished==false)
-				earliest_deadline_index = k
+			if (arrived[k].deadline<arrived[earliest_deadline_index].deadline)
+				if (arrived[k].finished==false)
+					earliest_deadline_index = k
+				end
 			end
 		end
 
